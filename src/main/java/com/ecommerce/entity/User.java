@@ -1,20 +1,28 @@
 package com.ecommerce.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Username is required")
     @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
     @Column(unique = true, nullable = false)
@@ -65,11 +73,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    // ===== Getters & Setters =====
+
     public Long getId() {
         return id;
     }
-
-
 
     public void setId(Long id) {
         this.id = id;
@@ -135,19 +143,13 @@ public class User {
         return createdAt;
     }
 
-
-
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
-
-
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
@@ -158,11 +160,9 @@ public class User {
         this.updatedAt = LocalDateTime.now();
     }
 
+    // ===== Role Enum =====
     public enum Role {
         USER,
         ADMIN
     }
-
-
-
 }
